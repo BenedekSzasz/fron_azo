@@ -1,5 +1,6 @@
 import { Component, inject } from '@angular/core';
 import { FormBuilder, ReactiveFormsModule } from '@angular/forms';
+import { EmployeeService } from '../shared/employee-service';
 
 @Component({
   selector: 'app-employee-component',
@@ -10,6 +11,7 @@ import { FormBuilder, ReactiveFormsModule } from '@angular/forms';
 export class EmployeeComponent {
 
   builder = inject(FormBuilder)
+  employeeService = inject(EmployeeService)
 
   employeeForm = this.builder.group({
     name: [''],
@@ -36,5 +38,13 @@ export class EmployeeComponent {
 
   createEmployee() {
     // szolgáltatás hívása
+    this.employeeService.createEmployee(this.employeeForm.value).subscribe({
+      next: (data) => {
+        console.log(data);
+      },
+      error: (err) => {
+        console.error(err);
+      }
+    });
   }
 }
