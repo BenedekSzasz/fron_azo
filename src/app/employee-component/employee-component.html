@@ -14,14 +14,49 @@
             (click)="toggleModal()"></button>
           </div>
           <div class="modal-body">
-            <p>Modal body text goes here.</p>
+            <form [formGroup]="employeeForm" (ngSubmit)="saveEmployee()" id="employeeForm">
+                <label for="name" class="form-label" >Név</label>
+                <input type="text" 
+                class="form-control" 
+                formControlName="name" 
+                id="name">
+            </form>
+          </div>
+          <div class="modal-body">
+            <form [formGroup]="employeeForm" (ngSubmit)="saveEmployee()">
+                <label for="city" class="form-label" >Település</label>
+                <input type="text" 
+                class="form-control" 
+                formControlName="city" 
+                id="city">
+            </form>
+          </div>
+          <div class="modal-body">
+            <form [formGroup]="employeeForm" (ngSubmit)="saveEmployee()">
+                <label for="salary" class="form-label" >Fizetés</label>
+                <input type="text" 
+                class="form-control" 
+                formControlName="salary" 
+                id="salary">
+            </form>
+          </div>
+          <div class="modal-body">
+            <form [formGroup]="employeeForm" (ngSubmit)="saveEmployee()">
+                <label for="positionId" class="form-label" >Beosztás</label>
+                <input type="text" 
+                class="form-control" 
+                formControlName="positionId" 
+                id="positionId">
+            </form>
           </div>
           <div class="modal-footer">
             <button type="button" class="btn btn-secondary" 
             data-bs-dismiss="modal"
             (click)="toggleModal()">Bezárás</button>
-            <button type="button" class="btn btn-primary"
-            (click)="saveEmployee()">Mentés</button>
+
+
+            <button type="submit" class="btn btn-primary"
+            form="employeeForm">Mentés</button>
           </div>
         </div>
       </div>
