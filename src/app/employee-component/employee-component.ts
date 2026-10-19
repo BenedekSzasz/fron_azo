@@ -30,7 +30,11 @@ export class EmployeeComponent {
 
   saveEmployee() {
     console.log("Mentés...");
-
+    this.createEmployee();
     this.toggleModal()
+  }
+
+  createEmployee() {
+    // szolgáltatás hívása
   }
 }
