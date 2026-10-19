@@ -1,1 +1,18 @@
-<p>login-component works!</p>
+<h2>Belépés</h2>
+
+<form [formGroup]="loginForm" (ngSubmit)="login()">
+    <div>
+        <label for="name" class="form-label mt-2">Felhasználónév</label>
+        <input type="text" 
+        class="form-control" 
+        formControlName="name" id="name">
+    </div>
+    <div>
+        <label for="password" class="form-label mt-2">Jelszó</label>
+        <input type="text" 
+        class="form-control" 
+        passwordControlName="password" id="password">
+    </div>
+
+    <button class="btn btn-success mt-3">Belépés</button>
+</form>
