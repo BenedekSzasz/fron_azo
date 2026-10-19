@@ -8,4 +8,19 @@ import { Component } from '@angular/core';
 })
 export class EmployeeComponent {
 
+  visibleModal = false
+
+  toggleModal() {
+    this.visibleModal = ! this.visibleModal
+  }
+
+  hideModal() {
+    this.visibleModal = false
+  }
+
+  saveEmployee() {
+    console.log("Mentés...");
+
+    this.toggleModal()
+  }
 }
