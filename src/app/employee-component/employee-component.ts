@@ -13,6 +13,8 @@ export class EmployeeComponent {
   builder = inject(FormBuilder)
   employeeService = inject(EmployeeService)
 
+  employees!: any[]
+
   employeeForm = this.builder.group({
     name: [''],
     city: [''],
@@ -21,6 +23,22 @@ export class EmployeeComponent {
   })
 
   visibleModal = false
+
+  ngOnInit() {
+    this.getEmployees();
+  }
+
+  getEmployees() {
+    this.employeeService.getEmployees().subscribe({
+      next: (res: any) => {
+        console.log(res);
+        this.employees = res.data
+      },
+      error: (err) => {
+        console.error(err);
+      }
+    })
+  }
 
   toggleModal() {
     this.visibleModal = ! this.visibleModal
