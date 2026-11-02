@@ -1,6 +1,7 @@
 import { Component, inject } from '@angular/core';
 import { FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
 import { AuthService } from '../shared/auth-service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-login-component',
@@ -11,6 +12,7 @@ import { AuthService } from '../shared/auth-service';
 export class LoginComponent {
   builder = inject(FormBuilder);
   authService = inject(AuthService);
+  router = inject(Router);
 
   loginForm = this.builder.group({
     name: ['Zöld Marianna', Validators.required],
@@ -24,6 +26,7 @@ export class LoginComponent {
       next: (data: any) => {
         console.log(data.accessToken);
         localStorage.setItem("token", data.accessToken);
+        this.router.navigate(['employee']);
       },
       error: (err) => {
         console.error(err);
