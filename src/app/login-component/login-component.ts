@@ -11,7 +11,7 @@ import { Router } from '@angular/router';
 })
 export class LoginComponent {
   builder = inject(FormBuilder);
-  authService = inject(AuthService);
+  auth = inject(AuthService);
   router = inject(Router);
 
   loginForm = this.builder.group({
@@ -22,10 +22,11 @@ export class LoginComponent {
   login() {
     console.log("Belépés.....");
     console.log(this.loginForm.value);
-    this.authService.login(this.loginForm.value).subscribe({
+    this.auth.login(this.loginForm.value).subscribe({
       next: (data: any) => {
         console.log(data.accessToken);
         localStorage.setItem("token", data.accessToken);
+        this.auth.loginSuccess();
         this.router.navigate(['employee']);
       },
       error: (err) => {
