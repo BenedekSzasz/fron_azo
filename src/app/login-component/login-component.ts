@@ -15,7 +15,7 @@ export class LoginComponent {
   router = inject(Router);
 
   loginForm = this.builder.group({
-    name: ['Zöld Marianna', Validators.required],
+    name: ['', Validators.required],
     password: ['titok', Validators.required]
   })
 
