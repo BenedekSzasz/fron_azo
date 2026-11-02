@@ -1,2 +1,1 @@
-TODO: átirányítás login után employee-ra
 TODO: kilépés
