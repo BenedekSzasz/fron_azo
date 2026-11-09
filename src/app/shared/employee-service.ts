@@ -1,5 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { inject, Injectable } from '@angular/core';
+import { Employee } from '../interfaces/employee';
 
 @Injectable({
   providedIn: 'root',
@@ -20,6 +21,13 @@ export class EmployeeService {
     const token = localStorage.getItem('token');
     const headers = { Authorization: `Bearer ${token}`};
     return this.http.post(url, employee, { headers });
+  }
+
+  updateEmployee(employee: any) {
+    const url = this.host + 'employees/' + employee.id;
+    const token = localStorage.getItem('token');
+    const headers = { Authorization: `Bearer ${token}`};
+    return this.http.put(url, employee, { headers });
   }
 
 }

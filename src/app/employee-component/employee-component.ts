@@ -4,23 +4,26 @@ import { EmployeeService } from '../shared/employee-service';
 import { Position } from '../interfaces/position';
 import { PositionService } from '../shared/position-service';
 import { PositionNamePipe } from '../shared/pipe/position-name-pipe';
+import { Employee } from '../interfaces/employee';
 
 @Component({
-  selector: 'app-employee-component',
   imports: [ReactiveFormsModule, PositionNamePipe],
-  templateUrl: './employee-component.html',
+  selector: 'app-employee-component',
   styleUrl: './employee-component.css',
+  templateUrl: './employee-component.html',
 })
 export class EmployeeComponent {
 
   builder = inject(FormBuilder)
-  employeeService = inject(EmployeeService)
+  employeeApi = inject(EmployeeService)
   positionsApi = inject(PositionService)
 
-  employees!: any[]
+  //employees!: any[]
+  employees = signal<any[]>([])
   positions = signal<Position[]>([])
 
   employeeForm = this.builder.group({
+    id: [''],
     name: [''],
     city: [''],
     salary: [''],
@@ -31,40 +34,86 @@ export class EmployeeComponent {
   addMode = true
 
   ngOnInit() {
-    console.log("Kezdés.....");
-    this.getEmployees();
-    this.getPositions();
+    console.log('kezdődik...')
+    this.getEmployees()
+    this.getPositions()
   }
 
   getEmployees() {
-    this.employeeService.getEmployees().subscribe({
+    this.employeeApi.getEmployees().subscribe({
       next: (res: any) => {
-        console.log(res);
-        this.employees = res.data
+        console.log(res)
+        // this.employees = res.data
+        this.employees.set(res.data)
       },
-      error: (err) => {
-        console.error(err);
-      }
+      error: () => { }
     })
   }
 
   toggleModal() {
-    this.visibleModal = ! this.visibleModal
+    this.visibleModal = !this.visibleModal
   }
 
+  showModal() {
+    this.visibleModal = true
+  }
   hideModal() {
     this.visibleModal = false
+    this.addMode = true
+    this.employeeForm.reset()
   }
 
   saveEmployee() {
-    console.log("Mentés...");
-    this.createEmployee();
-    this.toggleModal()
+    console.log("Mentés...")
+    if (this.addMode) {
+      this.createEmployee()  
+    } else {
+      this.updateEmployee()
+    }
+    
+    this.hideModal()
   }
 
   createEmployee() {
-    // szolgáltatás hívása
-    this.employeeService.createEmployee(this.employeeForm.value).subscribe({
+    // szogáltatás hívása
+    this.employeeApi.createEmployee(this.employeeForm.value).subscribe({
+      next: (data) => {
+        console.log(data)
+      },
+      error: (err) => {
+        console.error(err)
+      }
+    })
+  }
+
+  getPositions() {
+    this.positionsApi.getPositions().subscribe({
+      next: (res: any) => {
+        console.log(res.data)
+        this.positions.set(res.data)
+      },
+      error: () => { }
+    })
+  }
+  editEmployee(emp: Employee) {
+    console.log('Edit...')
+    console.log(emp)
+    this.toggleModal()
+    this.addMode = false
+
+    this.employeeForm.patchValue({
+      id: String(emp.id),
+      name: emp.name,
+      city: emp.city,
+      salary: String(emp.salary),
+      positionId: String(emp.positionId)
+    })
+
+  }
+
+  updateEmployee() {
+    console.log("Ide jön a frissítés......")
+      this.employeeApi.updateEmployee(this.employeeForm.value).subscribe({
       next: (data) => {
         console.log(data);
       },
@@ -74,19 +123,5 @@ export class EmployeeComponent {
     });
   }
 
-  getPositions() {
-    this.positionsApi.getPositions().subscribe({
-      next: (res: any) => {
-        console.log(res);
-        this.positions.set(res.data)
-      },
-      error: (err) => {
-        console.error(err);
-      }
-    })
-  }
-
-  editEmployee() {
-    
-  }
+  deleteEmployee() {}
 }
