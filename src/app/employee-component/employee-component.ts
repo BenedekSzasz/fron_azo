@@ -27,7 +27,7 @@ export class EmployeeComponent {
     name: [''],
     city: [''],
     salary: [null as number | null],
-    positionId: [null as number | null]
+    positionId: [null as number | null | string]
   })
 
   visibleModal = false
@@ -46,7 +46,9 @@ export class EmployeeComponent {
         // this.employees = res.data
         this.employees.set(res.data)
       },
-      error: () => { }
+      error: (err) => {
+        console.error(err)
+       }
     })
   }
 

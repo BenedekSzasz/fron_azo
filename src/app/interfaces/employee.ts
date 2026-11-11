@@ -3,5 +3,5 @@ export interface Employee {
     name: string | null | undefined;
     city: string | null | undefined;
     salary: number | null | undefined;
-    positionId: number | null | undefined;
+    positionId: number | null | undefined | string;
 }
