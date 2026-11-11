@@ -36,8 +36,28 @@
         (click)="startHideModal()"></button>
       </div>
       <div class="modal-body">
-        <form [formGroup]="positionForm"] (ngSubmit)="savePosition()"
+        <form [formGroup]="positionForm" (ngSubmit)="savePosition()"
         id="positionForm">
+            @if(!addMode){
+
+                <div>
+                <label for="id" class="form-label">Id</label>
+                <input type="text" class="form-control" id="id"
+                formControlName="id" readonly>
+            </div>
+
+            }
+            
+            <div>
+                <label for="name" class="form-label">Név</label>
+                <input type="text" class="form-control" id="name"
+                formControlName="name">
+            </div>
+            <div>
+                <label for="description" class="form-label">Leírás</label>
+                <input type="text" class="form-control" id="description"
+                formControlName="description" readonly>
+            </div>
 
 
 
