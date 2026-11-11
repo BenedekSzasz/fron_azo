@@ -23,11 +23,11 @@ export class EmployeeComponent {
   positions = signal<Position[]>([])
 
   employeeForm = this.builder.group({
-    id: [''],
+    id: [null as number | null],
     name: [''],
     city: [''],
-    salary: [''],
-    positionId: ['']
+    salary: [null as number | null],
+    positionId: [null as number | null]
   })
 
   visibleModal = false
@@ -102,11 +102,11 @@ export class EmployeeComponent {
     this.addMode = false
 
     this.employeeForm.patchValue({
-      id: String(emp.id),
+      id: emp.id,
       name: emp.name,
       city: emp.city,
-      salary: String(emp.salary),
-      positionId: String(emp.positionId)
+      salary: emp.salary,
+      positionId: emp.positionId
     })
 
   }
